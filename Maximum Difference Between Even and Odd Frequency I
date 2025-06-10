@@ -1,0 +1,52 @@
+Dictionary<char, int> charMap = new Dictionary<char, int>();
+int oddHighest = int.MinValue;
+int evenLowest = int.MaxValue;
+foreach (char ch in s)
+    charMap[ch] = charMap.ContainsKey(ch) ? ++charMap[ch] : 1;
+foreach (char keyS in charMap.Keys)
+{
+    if ( charMap[keyS] % 2 == 1 )
+        oddHighest = charMap[keyS] > oddHighest ? charMap[keyS] : oddHighest;
+    else
+        evenLowest = charMap[keyS] < evenLowest ? charMap[keyS] : evenLowest;
+}
+return oddHighest - evenLowest;
+
+public class Solution {
+    public int MaxDifference(string s) {
+
+        char[] charArray = s.ToCharArray();
+        Array.Sort(charArray);
+        int counter = 0;
+        int oddCounter = int.MinValue;
+        int evenCounter = int.MaxValue;
+        for (int i = 0; i < charArray.Length; i++)
+        {
+            if ( i == charArray.Length - 1 )
+            {
+                if (charArray[i] == charArray[i-1])
+                    counter++;
+                else
+                    counter = 1;
+                Solution.UpdateCounter(ref oddCounter, ref evenCounter, counter);
+            }
+            else if (i != charArray.Length - 1 && charArray[i] == charArray[i + 1])
+                ++counter;
+            else
+            {
+                ++counter;
+                Solution.UpdateCounter(ref oddCounter, ref evenCounter, counter);
+                counter = 0;
+            }
+        }
+        return oddCounter - evenCounter;
+    }
+
+    public static void UpdateCounter(ref int oddCounter, ref int evenCounter, int counter)
+    {
+        if ( counter % 2 == 1 )
+            oddCounter = counter > oddCounter ? counter : oddCounter;
+        else
+            evenCounter = counter < evenCounter ? counter : evenCounter;
+    }
+}
