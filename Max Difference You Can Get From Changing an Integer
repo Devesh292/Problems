@@ -1,0 +1,60 @@
+public class Solution
+{
+    public int MaxDiff(int num)
+    {
+        return GetMaximumNumber(new StringBuilder(num.ToString())) - GetMinimumNumber(new StringBuilder(num.ToString()));
+    }
+
+    public static int GetMinimumNumber(StringBuilder strMin)
+    {
+        char minHero1 = '1';
+        char minHero2 = '0';
+        char yDigit = '0';
+        bool firstDigitIsNotOne = false;
+
+        if (strMin[0] != minHero1)
+        {
+            yDigit = strMin[0];
+            return Convert.ToInt32(strMin.ToString().Replace(yDigit, minHero1));
+        }
+        else if (strMin[0] == minHero1)
+        {
+            foreach (char ch in strMin.ToString())
+            {
+                if (ch != minHero2 && ch != minHero1)
+                {
+                    yDigit = ch;
+                    break;
+                }
+            }
+            return Convert.ToInt32(strMin.ToString().Replace(yDigit, minHero2));
+        }
+        return Convert.ToInt32(strMin.ToString());
+    }
+
+    public static int GetMaximumNumber(StringBuilder strMax)
+    {
+        char maxHero = '9';
+        char xDigit = '0';
+
+        if (strMax[0] == maxHero)
+        {
+            foreach (char ch in strMax.ToString())
+            {
+                if (ch != maxHero)
+                {
+                    xDigit = ch;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            xDigit = strMax[0];
+        }
+
+        
+
+        return Convert.ToInt32(strMax.ToString().Replace(xDigit, maxHero));
+    }
+}
