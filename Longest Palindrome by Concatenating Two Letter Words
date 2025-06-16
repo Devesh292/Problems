@@ -1,0 +1,26 @@
+public class Solution {
+    public int LongestPalindrome(string[] words) {
+        int[,] gridArr = new int[26, 26];
+        int count = 0;
+        foreach (string word in words)
+        {
+            int ith = word[0] - 'a';
+            int jth = word[1] - 'a';
+            if (gridArr[jth, ith] > 0)
+            {
+                gridArr[jth, ith] -= 1;
+                count += 4;
+            }
+            else
+            {
+                gridArr[ith, jth] += 1;
+            }
+        }
+        for (int i=0; i < 26; i++)
+        {
+            if(gridArr[i, i] > 0)
+                return count + gridArr[i, i] * 2;
+        }
+        return count;
+    }
+}
